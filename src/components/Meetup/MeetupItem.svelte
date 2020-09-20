@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from "svelte";
-	import meetups from "./meetups-store";
+	import meetups from "../../meetups-store";
 	import Button from "../UI/Button.svelte";
 	import Badge from "../UI/Badge.svelte";
 	import { scale } from "svelte/transition";
