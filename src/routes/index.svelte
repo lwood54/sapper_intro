@@ -9,18 +9,18 @@
 				return res.json();
 			})
 			.then((data) => {
-				const loadedMeetups = [];
+				const fetchedMeetups = [];
 				for (const key in data) {
-					loadedMeetups.push({
+					fetchedMeetups.push({
 						...data[key],
 						id: key,
 					});
 				}
-				return { fetchedMeetups: loadedMeetups.reverse() };
+				return { fetchedMeetups: fetchedMeetups.reverse() };
 				// set a timeout just to observe loading spinner
 				// setTimeout(() => {
 				// 	isLoading = false;
-				// 	meetups.setMeetups(loadedMeetups.reverse()); // use custom functions from custom store
+				// 	meetups.setMeetups(fetchedMeetups.reverse()); // use custom functions from custom store
 				// }, 1000);
 			})
 			.catch((err) => {
@@ -45,7 +45,6 @@
 
 	export let fetchedMeetups; // needs to be same variable name as was returned in the preload function
 
-	let loadedMeetups = [];
 	let editMode;
 	let editedId;
 	let isLoading;
@@ -55,13 +54,13 @@
 
 	let favsOnly = false;
 
-	$: filteredMeetups = favsOnly ? loadedMeetups.filter((m) => m.isFavorite) : loadedMeetups;
+	$: filteredMeetups = favsOnly ? fetchedMeetups.filter((m) => m.isFavorite) : fetchedMeetups;
 
 	onMount(() => {
-		unsubscribe = meetups.subscribe((items) => {
-			loadedMeetups = items;
-		});
 		meetups.setMeetups(fetchedMeetups);
+		unsubscribe = meetups.subscribe((items) => {
+			fetchedMeetups = items;
+		});
 	});
 
 	onDestroy(() => {
